@@ -1,0 +1,381 @@
+﻿1,14) 
+Certainly! Let's go through the provided shell script line by line:
+Explanation:
+1. opt=1: Initializes the variable opt to 1, representing the user's menu choice.
+2. while [ "$opt" -lt 6 ]: Initiates a loop that continues as long as the value of opt is less than 6.
+3. echo -e "Choose one of the Following...": Displays the menu options to the user.
+4. read opt: Reads the user's choice into the variable opt.
+5. case $opt in: Starts a case statement based on the user's choice.
+6. 1) ...: If the user chooses option 1, it creates a new address book.
+* Prompts the user for a filename, checks if the file exists, and removes it if it does.
+* Creates a new file and initializes it with a header.
+* Prompts the user for name, phone number, and address, and appends the information to the file.
+7. 2) ...: If the user chooses option 2, it views the records in the address book.
+* Uses cat to display the contents of the file.
+8. 3) ...: If the user chooses option 3, it inserts a new record.
+* Prompts the user for name, phone number, and address, and appends the information to the file.
+9. 4) ...: If the user chooses option 4, it deletes a record.
+* Prompts the user for a name or phone number to delete.
+* Creates a temporary file excluding the specified record and replaces the original file.
+10. 5) ...: If the user chooses option 5, it modifies a record.
+* Prompts the user for a name or phone number to modify.
+* Creates a temporary file excluding the specified record.
+* Prompts the user for new information and appends it to the file.
+11. esac: Closes the case statement.
+12. done: Ends the while loop.
+This script provides a basic interactive menu-driven interface for managing an address book. The user can create, view, insert, delete, and modify records. The loop continues until the user chooses to exit (option 6).
+
+
+2,15)
+Explanation:
+1. Header Files:
+* #include <stdio.h>: Standard input/output functions.
+* #include <sys/types.h>: Data types used in system calls.
+* #include <sys/wait.h>: Declarations for waiting.
+* #include <unistd.h>: POSIX API for various functions including fork.
+2. Sorting Functions:
+* bubblesort() and selectionsort(): Sorting functions for bubble sort and selection sort algorithms.
+3. Main Function:
+* pid_t pid;: Declares a variable to store the process ID.
+* pid = fork();: Creates a new process using the fork system call, and assigns the process ID to pid.
+4. Conditional Block (Parent vs. Child):
+* if (fork() == 0) { ... }: Checks if this is the child process.
+* If true, the child executes bubblesort() (sorting using bubble sort).
+* else { ... }: This is the parent process.
+* wait(NULL);: The parent process waits for the child to finish.
+* After the child finishes, the parent executes selectionsort() (sorting using selection sort).
+Explanation:
+1. Header Files:
+* Same as the sorting program.
+2. Main Function:
+* int pid;: Declares a variable to store the process ID.
+* pid = getpid();: Gets the current process ID.
+* pid = fork();: Creates a new process using the fork system call, and assigns the process ID to pid.
+3. Conditional Block (Parent vs. Child):
+* if (pid < 0) { ... }: Checks if process creation failed.
+* else { ... }: This block is executed by both parent and child.
+* If pid == 0, this is the child process.
+* It sleeps for 5 seconds, creating an orphan (parent ID becomes 1).
+* If pid > 0, this is the parent process.
+Explanation:
+1. Header Files:
+* Same as the sorting program.
+2. Main Function:
+* int pid;: Declares a variable to store the process ID.
+* pid = fork();: Creates a new process using the fork system call, and assigns the process ID to pid.
+3. Conditional Block (Parent vs. Child):
+* if (pid < 0) { ... }: Checks if process creation failed.
+* if (pid > 0) { ... }: This block is executed by the parent process.
+* Parent process sleeps for 5 seconds.
+* Displays its parent ID using getppid().
+* else { ... }: This block is executed by the child process.
+* Child exits immediately (exit(0)), becoming a zombie.
+Theory:
+* Fork System Call:
+* fork() is used to create a new process (child) that is a copy of the calling process (parent).
+* Returns 0 to the child process and the child's PID to the parent.
+* The child process runs concurrently with the parent.
+* Wait System Call:
+* wait(NULL) is used by the parent process to wait for the child to finish.
+* It suspends the execution of the calling process until one of its child processes exits.
+* Orphan Process:
+* An orphan process is a child process whose parent process has finished.
+* The orphan process is adopted by the init process (process ID 1).
+* Zombie Process:
+* A zombie process is a process that has finished execution but still has an entry in the process table.
+* It retains its process ID and entry until the parent calls wait() to read the child's exit status.
+* After the parent collects the exit status, the zombie process is removed from the process table.
+
+
+4,17)
+Explanation:
+1. Header File:
+* #include <stdio.h>: Standard input/output functions.
+2. Variable Declarations:
+* Declaration of variables for arrival time, burst time, and temporary burst time storage.
+3. User Input:
+* printf("Enter the Total Number of Processes:");: Asks the user to input the total number of processes.
+* scanf("%d", &limit);: Reads the user input for the total number of processes.
+* User input for arrival time and burst time for each process in a loop.
+4. Initialization:
+* burst_time[9] = 9999;: Setting a large burst time for the last process to ensure it is not considered.
+5. SJF Scheduling:
+* The main loop runs until all processes are executed.
+* It selects the process with the shortest remaining burst time that has arrived.
+* The burst time of the selected process is decremented.
+* If the burst time becomes 0, the process is considered completed, and relevant calculations are done.
+6. Calculation and Output:
+* Average waiting and turnaround times are calculated.
+* The results are printed.
+Explanation:
+1. Header File:
+* #include<stdio.h>: Standard input/output functions.
+2. Variable Declarations:
+* Declaration of variables for process details (arrival time, burst time, remaining time), and others.
+3. User Input:
+* printf("Enter Total Process:\t ");: Asks the user to input the total number of processes.
+* scanf("%d", &n);: Reads the user input for the total number of processes.
+* User input for arrival time and burst time for each process in a loop.
+4. Round Robin Scheduling:
+* A loop that runs until all processes are executed.
+* It checks the remaining time of each process and executes it in a round-robin manner.
+* Output turnaround time and waiting time for each process as it completes.
+5. Calculation and Output:
+* Average waiting and turnaround times are calculated.
+* The results are printed.
+Theory Concepts:
+* Shortest Job First (Pre-emptive) - SJF:
+* Concept:
+* Selects the process with the shortest burst time.
+* Preemptive, meaning a process can be interrupted before it completes.
+* Algorithm:
+* Keeps track of the remaining burst time of each process.
+* Selects the process with the smallest remaining burst time when scheduling.
+* Advantage:
+* Minimizes waiting time and turnaround time.
+* Disadvantage:
+* May lead to starvation for longer processes.
+* Round Robin:
+* Concept:
+* Each process is assigned a fixed time slot (time quantum) in a cyclic order.
+* Algorithm:
+* Each process runs for a time quantum or until it finishes.
+* If a process's burst time is not completed within the time quantum, it is moved to the end of the queue.
+* Advantage:
+* Fairness,
+
+
+7)
+Explanation:
+1. Header File:
+* #include<stdio.h>: Standard input/output functions.
+2. Variable Declarations:
+* int p, c, count = 0, i, j, alc[5][3], max[5][3], need[5][3], safe[5], available[3], done[5], terminate = 0;: Declaration of variables for the number of processes, resources, allocation matrix, maximum matrix, need matrix, safe sequence, available resources, completion status, and termination counter.
+3. User Input:
+* User input for the number of processes, resources, allocation matrix, maximum matrix, and available resources.
+4. Calculate Need Matrix:
+* A nested loop calculates the need matrix as the difference between the maximum matrix and allocation matrix.
+5. Initialization:
+* Initialize the done array to keep track of processes.
+6. Banker's Algorithm Logic:
+* A loop runs until all processes are considered.
+* For each process, it checks if its resource needs are less than or equal to the available resources.
+* If true, it grants resources, marks the process as done, updates available resources, and increments the count.
+* If false, it increments the termination counter.
+* If the termination counter becomes equal to (p - 1), there is no safe sequence.
+7. Output Result:
+* If a safe sequence exists, it prints the available resources after completion and the safe sequence.
+Theory Concepts:
+* Banker's Algorithm:
+* Concept:
+* A deadlock avoidance algorithm that allocates resources to processes by checking for safety before allocation.
+* Algorithm:
+* The algorithm maintains information about the maximum demand of each process, the allocated resources, and the remaining need.
+* It checks if allocating resources to a process keeps the system in a safe state (no deadlock).
+* If safe, it grants the resources; otherwise, the process waits.
+* Key Data Structures:
+* Allocation Matrix (alc): Matrix indicating the number of resources allocated to each process.
+* Maximum Matrix (max): Matrix indicating the maximum number of resources a process may need.
+* Need Matrix (need): Matrix indicating the remaining resources needed by each process.
+* Available Vector (available): Vector indicating the available resources in the system.
+* Safe Sequence (safe): Array to store the sequence of processes in a safe order.
+* Safety Check:
+* The safety algorithm checks if, by granting the resources to a process, the system remains in a safe state.
+* If true, it grants resources, marks the process as done, and updates available resources.
+* If false, it waits.
+This algorithm ensures that resource allocation does not lead to a deadlock and only allows allocations that maintain system safety.
+
+
+8)
+Explanation:
+1. User Input:
+* Takes user input for the number of pages, page numbers, and the number of frames.
+2. Initialization:
+* Initializes an array frame to represent the frames, setting all elements to -1 (indicating empty frames).
+3. Page Replacement Logic (FCFS):
+* Iterates through the pages.
+* Checks if the page is already in a frame (avail is set to 1).
+* If not, replaces a page in the current frame, updates the frame, and increments the count of page faults.
+4. Display:
+* Prints the reference string and the page frames at each step.
+5. Output:
+* Prints the total number of page faults.
+Explanation:
+1. User Input:
+* Takes user input for the number of frames, the number of pages, and the reference string.
+2. Initialization:
+* Initializes arrays to represent frames and time counters.
+3. Page Replacement Logic (LRU):
+* Iterates through the pages.
+* Checks if the page is already in a frame (flag1 is set to 1).
+* If not, finds an empty frame (flag2 is set to 1).
+* If no empty frame, finds the least recently used frame using the findLRU function and replaces it.
+4. Display:
+* Prints the current state of frames after each page reference.
+5. Output:
+* Prints the total number of page faults.
+
+
+10)
+Explanation:
+1. key_t key = ftok("/tmp", 'S');:
+* Generates a key based on a file ("/tmp") and a character ('S'). Both the server and client must use the same key to access the same shared memory segment.
+2. int shmid = shmget(key, SHM_SIZE, 0666);:
+* Gets the shared memory segment using the key. SHM_SIZE specifies the size of the shared memory segment.
+3. char *shmaddr = shmat(shmid, NULL, 0);:
+* Attaches to the shared memory segment. shmaddr now points to the shared memory.
+4. printf("Client received message from shared memory: %s\n", shmaddr);:
+* Prints the message read from the shared memory.
+5. shmdt(shmaddr);:
+* Detaches from the shared memory.
+6. shmctl(shmid, IPC_RMID, NULL);:
+* Removes (deletes) the shared memory segment. This is optional and depends on the use case.
+Explanation:
+1. key_t key = ftok("/tmp", 'S');:
+* Generates a key, as explained above.
+2. int shmid = shmget(key, SHM_SIZE, IPC_CREAT | 0666);:
+* Creates a new shared memory segment if it doesn't exist. The client and server must use the same key to access the same shared memory segment.
+3. char *shmaddr = shmat(shmid, NULL, 0);:
+* Attaches to the shared memory segment.
+4. const char *message = "Hello from the server!";:
+* The message to be written to the shared memory.
+5. strcpy(shmaddr, message);:
+* Writes the message to the shared memory.
+6. printf("Server wrote message to shared memory: %s\n", message);:
+* Prints the message that was written to the shared memory.
+7. shmdt(shmaddr);:
+* Detaches from the shared memory.
+Theoretical Concept:
+* Shared Memory:
+* Shared memory is a mechanism for inter-process communication, where multiple processes can share a region of memory.
+* System V IPC (Inter-Process Communication) provides a set of mechanisms for processes to communicate and synchronize.
+* Key Generation (ftok):
+* ftok is a function that generates a unique key based on a file path and an identifier.
+* The key is used to identify the shared memory segment.
+* shmget:
+* Allocates a new shared memory segment or gets the identifier of an existing segment.
+* shmat:
+* Attaches the calling process to a shared memory segment.
+* shmdt:
+* Detaches the calling process from a shared memory segment.
+* shmctl:
+* Provides control operations on the shared memory segment, such as removal.
+* Memory Operations:
+* Processes can read and write to the shared memory region, allowing them to communicate.
+* Cleanup:
+* Proper cleanup is important to release system resources. In this case, shmdt detaches from the shared memory, and shmctl removes the segment.
+This example illustrates a basic use case of shared memory for communication between a server and a client process.
+
+
+
+
+11)
+Explanation:
+1. int RQ[100], i, n, TotalHeadMoment = 0, initial, count = 0;:
+* Declaration of variables, including the request queue (RQ), number of requests (n), total head movement (TotalHeadMoment), initial head position (initial), and count of processed requests (count).
+2. printf("Enter the number of Requests\n"); scanf("%d", &n);:
+* User input for the number of requests.
+3. printf("Enter the Requests sequence\n"); for (i = 0; i < n; i++) scanf("%d", &RQ[i]);:
+* User input for the request sequence.
+4. printf("Enter initial head position\n"); scanf("%d", &initial);:
+* User input for the initial head position.
+5. SSTF Disk Scheduling Logic:
+* The while loop continues until all requests are processed.
+* In each iteration, the algorithm finds the request with the minimum absolute distance from the current head position.
+* It updates the total head movement and moves the head to the selected request.
+* The selected request is marked as processed using a large value (1000 in this case).
+* The count of processed requests is incremented.
+6. printf("Total head movement is %d", TotalHeadMoment);:
+* Output: Prints the total head movement after processing all requests.
+Theoretical Concept:
+* SSTF Disk Scheduling:
+* SSTF stands for Shortest Seek Time First.
+* It aims to minimize the total head movement by selecting the request that is closest to the current head position.
+* The algorithm continually selects the request with the minimum seek time.
+* SSTF can lead to starvation for some requests if there are frequently arriving requests close to the head position.
+* Seek Time:
+* Seek time is the time taken for the disk arm to move the read/write heads to the desired track.
+* Total Head Movement:
+* The total head movement is the sum of the absolute differences between consecutive requests in the order they are processed.
+* Algorithm Steps:
+* Find the request with the minimum seek time (distance from the current head).
+* Move the head to that request.
+* Mark the request as processed.
+* Repeat until all requests are processed.
+* Note:
+* The use of 1000 as a marker for processed requests is an arbitrary choice; any large value that is not part of the valid request range can be used.
+This SSTF disk scheduling algorithm helps in optimizing disk access by reducing the seek time and, consequently, the total head movement.
+
+
+12)
+Explanation:
+1. int i, j, sum = 0, n; int d[20]; int disk; int temp, max; int dloc;:
+* Declaration of variables, including the disk queue (d), number of locations (n), disk head position (disk), temporary variable (temp), maximum disk location (max), and location of the disk head in the array (dloc).
+2. Input Section:
+* printf("Enter number of locations\t"); scanf("%d", &n);:
+* User input for the number of locations.
+* printf("Enter position of head\t"); scanf("%d", &disk);:
+* User input for the initial position of the disk head.
+* printf("Enter elements of disk queue\n"); for (i = 0; i < n; i++) { scanf("%d", &d[i]); }:
+* User input for the elements of the disk queue.
+3. Adding Current Head Position to Disk Queue:
+* d[n] = disk; n = n + 1;:
+* The current head position is added to the disk queue, and the size of the queue is incremented.
+4. Sorting Disk Locations:
+* for (i = 0; i < n; i++) { for (j = i; j < n; j++) { if (d[i] > d[j]) { temp = d[i]; d[i] = d[j]; d[j] = temp; } } }:
+* Sorting the disk locations in ascending order.
+5. Finding Location of Disk Head in Array:
+* for (i = 0; i < n; i++) { if (disk == d[i]) { dloc = i; break; } }:
+* Finding the location of the disk head in the sorted array.
+6. Printing Sequence in SCAN Order:
+* for (i = dloc; i >= 0; i--) { printf("%d -->", d[i]); } printf("0 -->"); for (i = dloc + 1; i < n; i++) { printf("%d-->", d[i]); }:
+* Printing the sequence of disk locations in the SCAN order.
+7. Calculating Total Cylinders Movement:
+* sum = disk + max; printf("\nMovement of total cylinders: %d", sum);:
+* Calculating the movement of total cylinders by adding the initial disk head position and the maximum disk location.
+Theoretical Concept:
+* SCAN Disk Scheduling:
+* Also known as the Elevator algorithm.
+* The disk arm starts at one end of the disk and moves towards the other end, serving requests in the direction it is moving.
+* When there are no more requests in the current direction, the direction is reversed, and the disk arm starts moving in the opposite direction.
+* SCAN avoids the problem of starvation encountered in FCFS and SSTF.
+* Total Cylinders Movement:
+* The total movement of the disk arm is the sum of the absolute differences between consecutive disk locations in the order they are serviced.
+* Sorting Disk Locations:
+* The disk locations are sorted in ascending order to facilitate the SCAN algorithm's movement.
+* Array Indexing:
+* The index (dloc) of the disk head in the array is found to determine the starting point for printing the SCAN sequence.
+This SCAN disk scheduling algorithm helps optimize disk access by reducing seek time and avoiding the problem of starvation.
+
+
+
+
+13)
+Explanation:
+1. struct max { int up; int down; } kate[50];:
+* A structure named max is defined to store the up and down positions in the disk queue.
+2. int dist(int a, int b) { if (a > b) return a - b; return b - a; }:
+* A function dist is defined to calculate the absolute distance between two points on the disk.
+3. void sort(int n) { ... }:
+* The sort function is used to sort the request array and find the up and down positions of the head.
+4. void look(int n) { ... }:
+* The look function implements the C-LOOK algorithm, determining the sequence in which the disk arm moves.
+5. Input Section:
+* User inputs include the disk size, the number of request sequences, the request sequence itself, the current head position, and the pre-request.
+6. Sorting Disk Locations:
+* The sort function is called to sort the request array and find the up and down positions in the disk queue.
+7. C-LOOK Algorithm:
+* The look function is called to implement the C-LOOK algorithm, printing the seek sequence and the total distance traveled by the disk arm.
+Theoretical Concept:
+* C-LOOK Disk Scheduling:
+* C-LOOK is an improved version of LOOK.
+* C-LOOK only scans the disk in one direction, servicing requests in that direction, and does not reverse direction until it reaches the end of the disk.
+* It avoids the inefficiency of LOOK in cases where there are no requests in the opposite direction.
+* Uptrack and Downtrack:
+* The uptrack and downtrack variables store the up and down positions in the sorted disk queue, respectively.
+* Absolute Distance Calculation:
+* The dist function calculates the absolute distance between two points on the disk, which is used to calculate seek counts.
+* Sorting Disk Locations:
+* The sort function sorts the request array to facilitate the movement of the disk arm in the C-LOOK algorithm.
+* Seek Sequence Printing:
+* The seek sequence is printed as the disk arm moves, and the total distance traveled by the disk arm is calculated and displayed.
